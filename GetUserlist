@@ -1,0 +1,12 @@
+
+Connect-MsolService
+ 
+Get-MSOLUser -all | % { $user=$_; $_.Licenses | Select {$user.userprincipalname},
+{$user.DisplayName},
+{$user.FirstName},
+{$user.LastName},
+{$user.city},
+{$user.Country},
+{$user.Department},
+{$user.MobilePhone},
+AccountSKuid} | Export-CSV c:\licensetype.csv –NoTypeInformation
