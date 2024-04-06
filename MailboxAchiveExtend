@@ -1,0 +1,38 @@
+https://www.powershellgallery.com/packages/ExchangeOnlineManagement/3.2.0-Preview2
+
+accounts@Mahajan.co.in
+
+pranab.mahajan@Mahajan.co.in
+
+Enable-Mailbox pranab.mahajan@Mahajan.co.in -AutoExpandingArchive
+
+Start-ManagedFolderAssistant -Identity pranab.mahajan@Mahajan.co.in
+
+
+
+$UserCredential = Get-Credential
+$Session = New-PSSession -ConfigurationName Microsoft.Exchange -ConnectionUri https://outlook.office365.com/powershell-liveid/ -Credential $UserCredential -Authentication Basic -AllowRedirection
+Import-PSSession $Session -DisableNameChecking
+------------------------------------------------------------------------------------------------------------
+
+
+Run Microsoft Exchange Online Powershell Module 
+
+
+if not installed download 
+https://www.powershellgallery.com/packages/ExchangeOnlineManagement/3.2.0-Preview2
+
+Connect-ExchangeOnline
+
+Enable-Mailbox accounts@Mahajan.co.in -AutoExpandingArchive
+
+Start-ManagedFolderAssistant -Identity accounts@Mahajan.co.in
+
+
+
+Install-Module -Name ExchangeOnlineManagement -RequiredVersion 3.1.0
+
+
+Enable-Mailbox virender.sharma@Mahajan.co.in -AutoExpandingArchive
+
+Start-ManagedFolderAssistant -Identity virender.sharma@Mahajan.co.in
