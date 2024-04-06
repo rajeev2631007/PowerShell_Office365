@@ -1,0 +1,46 @@
+The following is the issue definition of the Service Request, please feel free to let me know if there are any misunderstandings or concerns.
+ 
+Issue Definition:
+We want to empty the deleted folder in the archive 
+ 
+Analysis:
+Thank you for your time on the session. You can follow the steps below to purge items in Recoverable items folder (archive/primary). Please note that items will be purged permanently and unrecoverable.
+Step 1: Remove all holds that is applied on the mailbox. Firstly, Connect to Exchange Online PowerShell and run the cmdlet below to see the mailbox status.
+•	Check Recoverable items folder's status.
+Get-MailboxFolderStatistics username@domain.com -FolderScope RecoverableItems | FL Name,FolderAndSubfolderSize,ItemsInFolderAndSubfolders
+Get-MailboxFolderStatistics username@domain.com -FolderScope RecoverableItems -Archive | FL Name,FolderAndSubfolderSize,ItemsInFolderAndSubfolders
+•	Check the hold status on the mailbox.
+Get-Mailbox username@domain.com | FL *hold*
+Get-Mailbox username@domain.com | FL SingleItemRecoveryEnabled,RetainDeletedItemsFor
+•	Remove the hold depends on which hold is applied to the mailbox.
+Set-Mailbox -Identity username@domain.com -RetainDeletedItemsFor 0 -SingleItemRecoveryEnabled $false
+ 
+Set-Mailbox username@doamin.com -LitigationHoldEnabled $false
+If there is wide-org retention policy in M365 Compliance portal / https://compliance.microsoft.com/informationgovernance?viewid=retention applied to Exchange location and Teams chat location, please exclude the user from the policy.
+ 
+Step 2: Force MRM. After removing the holds from the mailbox, please force the Managed folder assistance to immediately start messaging records management (MRM) processing of the mailbox. To do it, run the following cmdlet.
+Start-ManagedFolderAssistant -Identity username@domain.com
+ 
+Step 3: Make sure that all holds are disabled once again. Because when you run Start-ManagedFolderAssistant cmdlet in Step 2, delay hold, or delay release hold gets enabled automatically. 
+Get-Mailbox username@domain.com | FL *hold*
+ 
+Set-Mailbox username@doamin.com -RemoveDelayHoldApplied
+Set-Mailbox username@domain.com -RemoveDelayReleaseHoldApplied
+ 
+Start-ManagedFolderAssistant -Identity username@domain.com
+ 
+Step 4: Once all hold is removed, server will start purging the items automatically. It can take several hours. To monitor the deletion process, you can run the following script.
+Get-MailboxFolderStatistics username@domain.com -FolderScope RecoverableItems | FL Name,FolderAndSubfolderSize,ItemsInFolderAndSubfolders
+Get-MailboxFolderStatistics username@domain.com -FolderScope RecoverableItems -Archive | FL Name,FolderAndSubfolderSize,ItemsInFolderAndSubfolders
+ 
+Step 5: Once the Recoverable items folder became empty, please run the following cmdlets to revert the mailbox to its previous state.
+•	Set-Mailbox username@domain.com -RetainDeletedItemsFor 14 -SingleItemRecoveryEnabled $true
+•	Include the mailbox to wide-org retention policy in M365 Compliance portal / https://compliance.microsoft.com/informationgovernance?viewid=retention.
+•	Enable litigation hold back if it was enabled earlier: Set-Mailbox username@doamin.com -LitigationHoldEnabled $true
+Should you have any questions and concerns please do not hesitate to contact us.
+------------------------------------------------------------------------------------------------------------------
+
+Thank you for your reply. As discussed, it appears that items in archive recoverable items folder is already purged. I believe you can revert the mailbox to its previous state.
+•	Set-Mailbox username@domain.com -RetainDeletedItemsFor 14 -SingleItemRecoveryEnabled $true
+•	Include the mailbox to wide-org retention policy in M365 Compliance portal / https://compliance.microsoft.com/informationgovernance?viewid=retention.
+Kindly confirm the case closure after completing the steps.
