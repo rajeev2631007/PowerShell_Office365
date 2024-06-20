@@ -1,0 +1,7 @@
+get-CASmailbox -resultsize unlimited | where-object { $_.ActiveSyncEnabled -eq $True }
+
+get-CASmailbox: This cmdlet retrieves Client Access Server (CAS) mailbox information from Exchange Online. CAS mailboxes are those that have settings for client access protocols.
+-resultsize unlimited: This parameter specifies that the cmdlet should return all CAS mailboxes without a limit on the number of results.
+|: The pipeline operator is used to pass the results of one cmdlet to another for further processing.
+where-object { $_.ActiveSyncEnabled -eq $True }: This cmdlet filters the CAS mailboxes to return only those where the ActiveSyncEnabled property is set to True. ActiveSyncEnabled indicates whether ActiveSync
+(a protocol used for mobile email synchronization) is enabled on the mailbox.
