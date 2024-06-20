@@ -1,0 +1,7 @@
+get-mailbox -resultsize unlimited | where-object { $_.LitigationHoldEnabled -eq $True }
+
+get-mailbox: This cmdlet retrieves mailbox information from Exchange Online.
+-resultsize unlimited: This parameter specifies that the cmdlet should return all mailboxes without a limit on the number of results.
+|: The pipeline operator is used to pass the results of one cmdlet to another for further processing.
+where-object { $_.LitigationHoldEnabled -eq $True }: This cmdlet filters the mailboxes to return only those where the LitigationHoldEnabled property is set to True.
+LitigationHoldEnabled indicates that litigation hold is enabled on the mailbox, preserving all mailbox content for legal purposes.
