@@ -1,0 +1,8 @@
+get-mailbox -resultsize unlimited | where-object { $_.ArchiveStatus -eq 'Active' }
+
+get-mailbox: This cmdlet retrieves mailbox information from Exchange Online.
+-resultsize unlimited: This parameter specifies that the cmdlet should return all mailboxes without a limit on the number of results.
+|: The pipeline operator is used to pass the results of one cmdlet to another for further processing.
+where-object { $_.ArchiveStatus -eq 'Active' }: This cmdlet filters the mailboxes to return only those where the ArchiveStatus property is set to 'Active'.
+ArchiveStatus indicates the status of the mailbox's archive feature, 
+with 'Active' meaning the archive is enabled and in use.
