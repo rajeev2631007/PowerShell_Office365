@@ -1,0 +1,13 @@
+get-mailboxfolderstatistics -identity "<MailboxIdentity>" | ft folderpath, itemsinfolder, foldersize
+
+Explanation:
+
+    get-mailboxfolderstatistics: This cmdlet retrieves statistics for each folder in the specified mailbox. It provides detailed information such as the number of items, folder sizes, and more.
+    -identity "<MailboxIdentity>": This parameter specifies the mailbox for which you want to retrieve the folder statistics. Replace <MailboxIdentity> with 
+the appropriate identifier for the mailbox, such as the user's email address or the mailbox's display name.
+    |: The pipeline operator is used to pass the results of one cmdlet to another for further processing.
+    ft: Short for Format-Table, this cmdlet formats the output as a table. The ft cmdlet is used to select and display specific properties in a tabular format.
+    folderpath, itemsinfolder, foldersize: These are the properties that will be displayed in the formatted table:
+        folderpath: The path of the folder within the mailbox.
+        itemsinfolder: The number of items contained in the folder.
+        foldersize: The size of the folder.
